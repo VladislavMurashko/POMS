@@ -1,0 +1,19 @@
+<resources>
+    <!--Common strings-->
+    <string name="app_name">QuizApp</string>
+    <string name="play_button_text">Играть</string>
+    <string name="stats_button_text">Статистика</string>
+    <string name="exit_button_text">Выйти</string>
+    <string name="submit_button_text">Подтвердить</string>
+    <string name="main_menu_image_desc">Логотип главного меню</string>
+    <string name="settings_button_text">Настройки</string>
+    <string name="yes_text">Да</string>
+    <string name="no_text">Нет</string>
+
+    <!--Close app AlertDialog strings-->
+    <string name="confirmation_title_text">Подтверждение</string>
+    <string name="confirmation_close_app_msg_text">Вы действительно хотите выйти?</string>
+    <string name="your_name_hint_text">Ваше имя</string>
+    <string name="enter_your_name_text">Введите ваше имя</string>
+    <string name="end_game_text">Конец игры</string>
+</resources>
