@@ -34,8 +34,13 @@ class MainActivity : AppCompatActivity() {
         alertBuilder.show()
     }
 
-    fun statistics(view: View) {
-        val intent = Intent(this, EndGameActivity::class.java)
+    fun openStats(@Suppress("UNUSED_PARAMETER") view: View) {
+        val intent = Intent(this, StatsActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun openSettings(@Suppress("UNUSED_PARAMETER") view: View) {
+        val intent = Intent(this, InDevelopmentActivity::class.java)
         startActivity(intent)
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_bg"
+    android:background="@drawable/bg"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -12,8 +12,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@android:color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
@@ -26,21 +26,12 @@
             android:paddingTop="20dp"
             android:paddingBottom="20dp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/main_menu_image_desc"
-                app:srcCompat="@drawable/ic_launcher_background"
-                tools:srcCompat="@tools:sample/avatars" />
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
                 android:background="#80D860"
                 android:onClick="startGame"
                 android:text="@string/play_button_text"
@@ -51,11 +42,11 @@
                 android:id="@+id/button4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="60dp"
                 android:background="#FFC406"
-                android:onClick="statistics"
+                android:onClick="openStats"
                 android:text="@string/stats_button_text"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
@@ -64,21 +55,22 @@
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="60dp"
                 android:background="#FC3029"
                 android:text="@string/settings_button_text"
                 android:textColor="@android:color/white"
+                android:onClick="openSettings"
                 android:textSize="16sp" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="60dp"
                 android:background="#3697DB"
                 android:onClick="closeApp"
                 android:text="@string/exit_button_text"

@@ -22,14 +22,25 @@
         </activity>
         <activity
             android:name=".GameActivity"
+            android:label="Игра"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".EndGameActivity"
-            android:label="Конец игры"
+            android:label="Результат"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".InDevelopmentActivity"
+            android:label="Настройки"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StatsActivity"
+            android:label="Статистика"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
