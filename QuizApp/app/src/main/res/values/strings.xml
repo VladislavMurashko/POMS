@@ -21,4 +21,5 @@
     <string name="image_cont_desc">image</string>
     <string name="name_title_text">Имя</string>
     <string name="scores_title_text">Количество очков</string>
+    <string name="loading_data_text">Идёт загрузка...</string>
 </resources>

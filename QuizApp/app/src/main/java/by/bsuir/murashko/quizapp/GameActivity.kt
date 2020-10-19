@@ -6,35 +6,96 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getDrawable
 import by.bsuir.murashko.quizapp.model.Question
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_game.*
 
+
 class GameActivity : AppCompatActivity(), View.OnClickListener {
-    private var mStorageRef: StorageReference? = null
-    private var mCurrentProgressPosition: Int = 1
-    private var mQuestionsList: ArrayList<Question>? = null
-    private var mIsUserSubmitted: Boolean = false
-    private var mSelectedOptionPosition: Int = 0
     private var mCorrectAnswers: Int = 0
+    private var mCurrentProgressPosition: Int = 1
+    private var mSelectedOptionPosition: Int = 0
+    private var mIsUserSubmitted: Boolean = false
+    private var questionsList = ArrayList<Question>()
+    private var storage = FirebaseStorage.getInstance()
+    private var database = FirebaseDatabase.getInstance()
+    private var storageRef = storage.getReference("/")
+    private var databaseRef = database.getReference("questions/ru")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        mStorageRef = FirebaseStorage.getInstance().reference
+        val builder = AlertDialog.Builder(this)
+        builder.setCancelable(false)
+        builder.setView(R.layout.layout_loading_dialog)
+        val dialog = builder.create()
+        loadQuestions(dialog)
 
-        mQuestionsList = Constants.getQuestions()
+        initClickListeners()
+    }
 
-        setQuestion()
+    private fun loadQuestions(dialog: AlertDialog) {
+        dialog.show()
+        databaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val children = dataSnapshot.children
+                children.forEach {
+                    it.getValue(Question::class.java)?.let { it1 -> questionsList.add(it1) }
+                }
+                setQuestion()
+                dialog.dismiss()
+            }
 
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun initClickListeners() {
         tv_ans_1.setOnClickListener(this)
         tv_ans_2.setOnClickListener(this)
         tv_ans_3.setOnClickListener(this)
         tv_ans_4.setOnClickListener(this)
+    }
+
+    /**
+     * A function for setting the question to UI components.
+     */
+    private fun setQuestion() {
+        val currentQuestion = questionsList[mCurrentProgressPosition - 1]
+
+        resetOptionsView()
+
+        btn_submit_answer.text = "Подтвердить"
+
+        progressBar.progress = mCurrentProgressPosition
+
+        tv_progress.text = String.format("%d/%d", mCurrentProgressPosition, progressBar.max)
+        tv_question.text = currentQuestion.question
+
+        storageRef.child(currentQuestion.imageUrl).downloadUrl.addOnSuccessListener { Uri ->
+            Glide.with(this)
+                    .load(Uri)
+                    .apply(RequestOptions()
+                            .error(R.drawable.image_not_found)
+                            .placeholder(R.drawable.circular_progress_style)
+                            .fitCenter())
+                    .into(iv_questionImage)
+        }
+
+        tv_ans_1.text = currentQuestion.optionOne
+        tv_ans_2.text = currentQuestion.optionTwo
+        tv_ans_3.text = currentQuestion.optionThree
+        tv_ans_4.text = currentQuestion.optionFour
     }
 
     override fun onClick(v: View?) {
@@ -68,21 +129,21 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
             mCurrentProgressPosition++
 
             when {
-                mCurrentProgressPosition <= mQuestionsList!!.size -> {
+                mCurrentProgressPosition <= questionsList.size -> {
                     mIsUserSubmitted = false
                     setQuestion()
                 }
                 else -> {
                     val intent = Intent(this, EndGameActivity::class.java)
                     intent.putExtra(Constants.CORRECT_ANSWERS, mCorrectAnswers)
-                    intent.putExtra(Constants.TOTAL_QUESTIONS, mQuestionsList!!.size)
+                    intent.putExtra(Constants.TOTAL_QUESTIONS, questionsList.size)
                     startActivity(intent)
                 }
             }
         } else {
-            val question = mQuestionsList?.get(mCurrentProgressPosition - 1)
+            val question = questionsList[mCurrentProgressPosition - 1]
 
-            if (question!!.correctAnswer != mSelectedOptionPosition) {
+            if (question.correctAnswer != mSelectedOptionPosition) {
                 answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
             } else {
                 mCorrectAnswers++
@@ -90,7 +151,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
             answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
 
-            if (mCurrentProgressPosition == mQuestionsList!!.size) {
+            if (mCurrentProgressPosition == questionsList.size) {
                 btn_submit_answer.text = "Завершить"
             } else {
                 btn_submit_answer.text = "Следующий вопрос"
@@ -99,27 +160,6 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
             mSelectedOptionPosition = 0
             mIsUserSubmitted = true
         }
-    }
-
-    /**
-     * A function for setting the question to UI components.
-     */
-    private fun setQuestion() {
-        val currentQuestion = mQuestionsList!![mCurrentProgressPosition - 1]
-
-        resetOptionsView()
-
-        btn_submit_answer.text = "Подтвердить"
-
-        progressBar.progress = mCurrentProgressPosition
-        tv_progress.text = String.format("%d/%d", mCurrentProgressPosition, progressBar.max)
-
-        tv_question.text = currentQuestion.question
-        iv_questionImage.setImageResource(currentQuestion.image)
-        tv_ans_1.text = currentQuestion.optionOne
-        tv_ans_2.text = currentQuestion.optionTwo
-        tv_ans_3.text = currentQuestion.optionThree
-        tv_ans_4.text = currentQuestion.optionFour
     }
 
     /**
