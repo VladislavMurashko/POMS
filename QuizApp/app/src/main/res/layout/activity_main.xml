@@ -9,6 +9,12 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="60dp"
+        android:src="@drawable/menu_logo" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,9 +65,9 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="60dp"
                 android:background="#FC3029"
+                android:onClick="openSettings"
                 android:text="@string/settings_button_text"
                 android:textColor="@android:color/white"
-                android:onClick="openSettings"
                 android:textSize="16sp" />
 
             <Button
@@ -79,5 +85,12 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
 </LinearLayout>

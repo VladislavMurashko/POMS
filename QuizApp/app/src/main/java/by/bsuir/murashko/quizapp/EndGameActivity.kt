@@ -9,10 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_end_game.*
 
-
 class EndGameActivity : AppCompatActivity() {
+
     private val mStatsSharedPref = "stats"
     private var correctAnswers: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end_game)
