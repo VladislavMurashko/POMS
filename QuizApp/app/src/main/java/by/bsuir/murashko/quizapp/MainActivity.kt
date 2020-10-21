@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         if (isNetworkAvailable) {
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
+            setupPendingAnimation()
         } else {
             Snackbar.make(view!!, "Отсутствует подключение к Интернету :(", Snackbar.LENGTH_SHORT).show()
         }
@@ -73,10 +74,16 @@ class MainActivity : AppCompatActivity() {
     fun openStats(@Suppress("UNUSED_PARAMETER") view: View) {
         val intent = Intent(this, StatsActivity::class.java)
         startActivity(intent)
+        setupPendingAnimation()
     }
 
     fun openSettings(@Suppress("UNUSED_PARAMETER") view: View) {
         val intent = Intent(this, InDevelopmentActivity::class.java)
         startActivity(intent)
+        setupPendingAnimation()
+    }
+
+    private fun setupPendingAnimation() {
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_in)
     }
 }

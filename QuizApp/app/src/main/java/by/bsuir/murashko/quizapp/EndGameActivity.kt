@@ -24,6 +24,11 @@ class EndGameActivity : AppCompatActivity() {
         tv_score.text = String.format("Вы набрали %d из %d очков", correctAnswers, totalQuestions)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
     fun saveResult(@Suppress("UNUSED_PARAMETER") view: View) {
         val username = et_username.text
 

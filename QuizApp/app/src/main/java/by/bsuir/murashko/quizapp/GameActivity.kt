@@ -35,6 +35,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        window.navigationBarColor = Color.WHITE
+
         val builder = AlertDialog.Builder(this)
         builder.setCancelable(false)
         builder.setView(R.layout.layout_loading_dialog)
@@ -42,6 +44,11 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         loadQuestions(dialog)
 
         initClickListeners()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     private fun loadQuestions(dialog: AlertDialog) {
@@ -138,6 +145,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     intent.putExtra(Constants.CORRECT_ANSWERS, mCorrectAnswers)
                     intent.putExtra(Constants.TOTAL_QUESTIONS, questionsList.size)
                     startActivity(intent)
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 }
             }
         } else {
