@@ -14,6 +14,7 @@
     <!--Close app AlertDialog strings-->
     <string name="confirmation_title_text">Подтверждение</string>
     <string name="confirmation_close_app_msg_text">Вы действительно хотите выйти?</string>
+    <string name="confirmation_reset_stats_msg_text">Вы дейстительно хотите сбросить прогресс?</string>
     <string name="your_name_hint_text">Ваше имя</string>
     <string name="enter_your_name_text">Введите ваше имя</string>
     <string name="end_game_text">Конец игры</string>
@@ -21,5 +22,6 @@
     <string name="image_cont_desc">image</string>
     <string name="name_title_text">Имя</string>
     <string name="scores_title_text">Количество очков</string>
-    <string name="loading_data_text">Идёт загрузка...</string>
+    <string name="loading_data_text">Идёт загрузка…</string>
+    <string name="reset_progress_text">Сбросить прогресс</string>
 </resources>

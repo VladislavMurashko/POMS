@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,9 +11,10 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginBottom="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="50dp"
+        android:layout_weight="85"
         android:src="@drawable/menu_logo" />
 
     <androidx.cardview.widget.CardView
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:layout_weight="15"
         android:background="@android:color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
@@ -38,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
-                android:background="#80D860"
+                android:background="#FC3029"
                 android:onClick="startGame"
                 android:text="@string/play_button_text"
                 android:textColor="@android:color/white"
@@ -51,22 +54,9 @@
                 android:layout_marginStart="60dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="60dp"
-                android:background="#FFC406"
+                android:background="#FFD600"
                 android:onClick="openStats"
                 android:text="@string/stats_button_text"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="60dp"
-                android:background="#FC3029"
-                android:onClick="openSettings"
-                android:text="@string/settings_button_text"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
@@ -77,7 +67,7 @@
                 android:layout_marginStart="60dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="60dp"
-                android:background="#3697DB"
+                android:background="#80D860"
                 android:onClick="closeApp"
                 android:text="@string/exit_button_text"
                 android:textColor="@android:color/white"
@@ -85,11 +75,13 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 

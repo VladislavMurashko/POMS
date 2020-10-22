@@ -22,17 +22,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        MobileAds.initialize(this) {}
-
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
-
         networkMonitor.result = { isAvailable, _ ->
             runOnUiThread {
                 isNetworkAvailable = isAvailable
             }
         }
+
+        MobileAds.initialize(this)
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onResume() {
@@ -77,13 +77,7 @@ class MainActivity : AppCompatActivity() {
         setupPendingAnimation()
     }
 
-    fun openSettings(@Suppress("UNUSED_PARAMETER") view: View) {
-        val intent = Intent(this, InDevelopmentActivity::class.java)
-        startActivity(intent)
-        setupPendingAnimation()
-    }
-
     private fun setupPendingAnimation() {
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_in)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }
