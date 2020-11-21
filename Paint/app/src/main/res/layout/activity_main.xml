@@ -25,35 +25,43 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_line_weight_24" />
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:src="@drawable/eraser" />
-
-        <ImageButton
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_baseline_color_lens" />
 
         <ImageButton
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_save_24" />
+            android:src="@drawable/ic_baseline_edit_24" />
 
         <ImageButton
-            android:layout_width="60dp"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_geometrical_shapes_set" />
+
+
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/eraser" />
+
+        <ImageButton
+            android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:onClick="clearCanvas"
             android:src="@drawable/ic_baseline_clear_24" />
+
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_baseline_save_24" />
 
     </LinearLayout>
 
