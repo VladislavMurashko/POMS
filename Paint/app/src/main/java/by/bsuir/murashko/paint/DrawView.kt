@@ -68,6 +68,10 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
         return true
     }
 
+    fun changeColor(color: Int) {
+        paint.color = color
+    }
+
     fun clearCanvas() {
         extraCanvas.drawColor(backgroundColor, PorterDuff.Mode.CLEAR)
         invalidate()
