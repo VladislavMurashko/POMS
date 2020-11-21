@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\Vladislav Murashko\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Vladislav Murashko\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_JumpJump.-1289751933.00" t="ExcludeRecursive" />
-    <e p="D:\Folder\Unity\Projects\JumpJump" t="IncludeRecursive">
+    <e p="C:\Users\Vladislav Murashko\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_JumpJump.524992227.00" t="ExcludeRecursive" />
+    <e p="D:\Folder\Android_projects\Poms\JumpJump" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="BayatGames" t="Include">
@@ -15,10 +15,14 @@
           <e p="Hero" t="Include">
             <e p="HeroMovement.cs" t="Include" />
           </e>
-          <e p="Mase" t="Include">
-            <e p="MaseController.cs" t="Include" />
-            <e p="PointsController.cs" t="Include" />
+          <e p="Mace" t="Include">
+            <e p="MaceController.cs" t="Include" />
             <e p="Spawner.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="RestartButtonController.cs" t="Include" />
+            <e p="ScoreController.cs" t="Include" />
+            <e p="UIController.cs" t="Include" />
           </e>
         </e>
       </e>

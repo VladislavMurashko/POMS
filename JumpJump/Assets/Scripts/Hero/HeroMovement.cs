@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UI;
+using UnityEngine;
 
 namespace Hero
 {
@@ -19,6 +20,11 @@ namespace Hero
         private static readonly int HorizontalSpeed = Animator.StringToHash("HorizontalSpeed");
         private static readonly int VerticalSpeed = Animator.StringToHash("VerticalSpeed");
         private static readonly int IsOnGround = Animator.StringToHash("IsOnGround");
+
+        private void Start()
+        {
+            UIController.HideRestartButton();
+        }
 
         private void Update()
         {
@@ -58,7 +64,7 @@ namespace Hero
             SetFastDownward();
 
             _directionX = Input.GetAxis("Horizontal");
-            
+
             if (isOnGround)
             {
                 rb.velocity = new Vector2(_directionX * speed, rb.velocity.y);
@@ -94,8 +100,10 @@ namespace Hero
 
         private void OnDrawGizmos()
         {
-            var positionPlus = transform.position + rayCastOffset;
-            var positionMinus = transform.position - rayCastOffset;
+            var position = transform.position;
+            var positionPlus = position + rayCastOffset;
+            var positionMinus = position - rayCastOffset;
+
             Gizmos.color = Color.red;
             Gizmos.DrawLine(positionPlus, positionPlus + Vector3.down * rayCastLength);
             Gizmos.DrawLine(positionMinus, positionMinus + Vector3.down * rayCastLength);

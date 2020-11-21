@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec410eb2f7f54d8479d829cd47b7a929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MacePrefab: {fileID: 5289620088224771993, guid: e70d0f8e1407a6e4b94a9270c49e7957, type: 3}
+  macePrefab: {fileID: 5289620088224771993, guid: e70d0f8e1407a6e4b94a9270c49e7957, type: 3}
   spawnOffset: {x: 0, y: 0, z: 0}
   repeatTime: 2
   maxFrequency: 0.1
@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 170871200}
   - component: {fileID: 170871199}
   - component: {fileID: 170871198}
+  - component: {fileID: 170871202}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -379,6 +380,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &170871202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170871197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508bcda63c7f6814f95816812fbbc18c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 797885110}
+  scoreValue: 0
 --- !u!1 &183108679
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,8 +582,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 508bcda63c7f6814f95816812fbbc18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsCounter: {fileID: 797885110}
-  pointsCount: 0
+  scoreText: {fileID: 797885110}
+  scoreValue: 0
 --- !u!1 &235391185
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -965,7 +980,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: RESTART
 --- !u!222 &471063857
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1069,9 +1084,10 @@ GameObject:
   - component: {fileID: 578203342}
   - component: {fileID: 578203341}
   - component: {fileID: 578203340}
+  - component: {fileID: 578203343}
   m_Layer: 5
-  m_Name: Button
-  m_TagString: Untagged
+  m_Name: RestartButton
+  m_TagString: RestartButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1138,7 +1154,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 578203341}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 578203343}
+        m_TargetAssemblyTypeName: UI.RestartButtonController, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &578203341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,8 +1187,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 6876196804455891898, guid: 5ef3ca7e743290d448e5e48c3d4ebc9c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1177,6 +1205,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578203338}
   m_CullTransparentMesh: 0
+--- !u!114 &578203343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578203338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c14721e5cd94192a41c6a60d9b1cb13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &797885108
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1229,7 @@ GameObject:
   - component: {fileID: 797885111}
   - component: {fileID: 797885110}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1211,7 +1251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -320, y: 140}
+  m_AnchoredPosition: {x: -286, y: 138}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &797885110

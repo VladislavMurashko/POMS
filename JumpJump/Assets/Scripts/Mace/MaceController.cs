@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UI;
+using UnityEngine;
 
-namespace Mase
+namespace Mace
 {
-    public class MaseController : MonoBehaviour
+    public class MaceController : MonoBehaviour
     {
-
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             transform.Rotate(0, 0, 5f, Space.World);
         }
@@ -15,8 +14,8 @@ namespace Mase
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                // SceneManager.LoadScene("Main");
-                Time.timeScale = 0;
+                UIController.FreezeGame();
+                UIController.ShowRestartButton();
             }
 
             if (other.gameObject.CompareTag("Ground"))
