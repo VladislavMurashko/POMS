@@ -90,6 +90,10 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
         invalidate()
     }
 
+    fun getBitmap(): Bitmap {
+        return extraBitmap
+    }
+
     /**
      * The following methods factor out what happens for different touch events,
      * as determined by the onTouchEvent() when statement.

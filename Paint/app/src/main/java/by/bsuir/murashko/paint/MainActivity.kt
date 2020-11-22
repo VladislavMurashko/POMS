@@ -7,11 +7,18 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
+import by.bsuir.murashko.paint.util.PermissionsHelper
 import com.google.android.material.slider.Slider
+import com.himanshurawat.imageworker.Extension
+import com.himanshurawat.imageworker.ImageWorker
 import yuku.ambilwarna.AmbilWarnaDialog
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawView: DrawView
@@ -22,11 +29,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var shapesButton: ImageButton
     private lateinit var eraserButton: ImageButton
     private var isEraserSelected = false
-    private val defaultColor = Color.BLACK
     private val buttonList = ArrayList<ImageButton>()
-    private var strokeColor: Int = Color.BLACK
     private var sliderValue: Float = 10f.px
     private var strokeWidth: Float = sliderValue
+    private var strokeColor: Int = Color.BLACK
+    private val defaultColor = Color.BLACK
+    private val dateFormat = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
     private val Float.px: Float get() = (this * Resources.getSystem().displayMetrics.density)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         pencilButton = findViewById(R.id.pencil_ib)
         shapesButton = findViewById(R.id.shapes_ib)
         eraserButton = findViewById(R.id.eraser_ib)
+        pencilButton.setActive
         buttonList.add(pencilButton)
         buttonList.add(shapesButton)
         buttonList.add(eraserButton)
@@ -119,10 +128,29 @@ class MainActivity : AppCompatActivity() {
         eraserButton.setActive
         isEraserSelected = true
         drawView.chooseEraser()
+        showStrokeWidthDialog()
     }
 
     fun clearCanvas(view: View) {
         drawView.clearCanvas()
+    }
+
+    fun saveDrawing(view: View) {
+        if (PermissionsHelper.askForPermissions(this, this)) {
+            val currentDateTime: String = dateFormat.format(Date())
+            ImageWorker.to(this)
+                .directory("Download")
+                .subDirectory("PaintDrawings")
+                .setFileName("drawing_${currentDateTime}")
+                .withExtension(Extension.PNG)
+                .save(drawView.getBitmap(), 100)
+
+            showToast(R.string.drawing_successfully_saved)
+        }
+    }
+
+    private fun showToast(msg: Int) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     private val ImageButton.setActive: Unit

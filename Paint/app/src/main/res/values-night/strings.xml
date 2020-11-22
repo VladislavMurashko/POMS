@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="submit_dialog_button_text">ОК</string>
+    <!--Permissions strings-->
+    <string name="app_settings_title">Перейти в настройки</string>
+    <string name="permission_denied_title">Доступ запрещён</string>
+    <string name="permission_denied_text">Отсутствует разрешение на чтение/запись. Установите разрешения в настройках приложения.</string>
 </resources>
