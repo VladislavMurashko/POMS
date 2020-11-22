@@ -1,4 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Paint</string>
     <string name="submit_dialog_button_text">ОК</string>
 </resources>

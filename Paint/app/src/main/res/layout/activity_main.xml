@@ -27,27 +27,31 @@
         <ImageButton
             android:layout_width="55dp"
             android:layout_height="match_parent"
-            android:onClick="chooseColor"
             android:background="@android:color/transparent"
+            android:onClick="chooseColor"
             android:src="@drawable/ic_baseline_color_lens" />
 
         <ImageButton
+            android:id="@+id/pencil_ib"
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:onClick="choosePencil"
             android:src="@drawable/ic_baseline_edit_24" />
 
         <ImageButton
+            android:id="@+id/shapes_ib"
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_geometrical_shapes_set" />
 
-
         <ImageButton
+            android:id="@+id/eraser_ib"
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:onClick="chooseEraser"
             android:src="@drawable/eraser" />
 
         <ImageButton

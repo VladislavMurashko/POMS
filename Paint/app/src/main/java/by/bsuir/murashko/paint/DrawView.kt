@@ -14,7 +14,7 @@ private const val STROKE_WIDTH = 12f
 class DrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
     private var path = Path()
-    private val drawColor = Color.BLACK
+    private var drawColor = Color.BLACK
     private val backgroundColor = Color.WHITE
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
@@ -68,8 +68,21 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
         return true
     }
 
+    fun changeStrokeWidth(strokeWidth: Float) {
+        paint.strokeWidth = strokeWidth
+    }
+
     fun changeColor(color: Int) {
-        paint.color = color
+        drawColor = color
+        paint.color = drawColor
+    }
+
+    fun choosePencil() {
+        paint.color = drawColor
+    }
+
+    fun chooseEraser() {
+        paint.color = backgroundColor
     }
 
     fun clearCanvas() {
