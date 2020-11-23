@@ -25,13 +25,6 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="55dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:onClick="chooseColor"
-            android:src="@drawable/ic_baseline_color_lens" />
-
-        <ImageButton
             android:id="@+id/pencil_ib"
             android:layout_width="55dp"
             android:layout_height="match_parent"
@@ -44,7 +37,31 @@
             android:layout_width="55dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:onClick="chooseShape"
             android:src="@drawable/ic_geometrical_shapes_set" />
+
+        <ImageButton
+            android:id="@+id/thickness_ib"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:onClick="chooseLineThickness"
+            android:src="@drawable/ic_baseline_line_weight_24" />
+
+        <ImageButton
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:onClick="chooseColor"
+            android:src="@drawable/ic_baseline_color_lens" />
+
+
+        <!--<ImageButton
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:onClick="setImageBackground"
+            android:src="@drawable/ic_baseline_image_24" />-->
 
         <ImageButton
             android:id="@+id/eraser_ib"
@@ -53,6 +70,14 @@
             android:background="@android:color/transparent"
             android:onClick="chooseEraser"
             android:src="@drawable/eraser" />
+
+        <!--<ImageButton
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:onClick="undoAction"
+            android:src="@drawable/ic_baseline_undo_24" />-->
+
 
         <ImageButton
             android:layout_width="55dp"
@@ -64,7 +89,7 @@
         <ImageButton
             android:layout_width="55dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="15dp"
             android:background="@android:color/transparent"
             android:onClick="saveDrawing"
             android:src="@drawable/ic_baseline_save_24" />

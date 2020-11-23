@@ -2,8 +2,9 @@
     <string name="app_name">Paint</string>
     <string name="submit_dialog_button_text">ОК</string>
     <string name="cancel_button_title">Отмена</string>
-    <string name="drawing_successfully_saved">Рисунок успешно сохранен!</string>
+    <string name="drawing_successfully_saved">Рисунок успешно сохранен в "Download/PaintDrawings"!</string>
     <string name="drawing_not_saved">Не удалось сохранить рисунок, попробуйте снова!</string>
+    <string name="select_file_title">Выбор файла</string>
     <!--Permissions strings-->
     <string name="app_settings_title">Перейти в настройки</string>
     <string name="permission_denied_title">Доступ запрещён</string>

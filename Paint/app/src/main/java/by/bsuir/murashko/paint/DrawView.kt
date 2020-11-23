@@ -7,7 +7,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import by.bsuir.murashko.paint.model.Shape
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 private const val STROKE_WIDTH = 12f
 
@@ -18,6 +21,7 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
     private val backgroundColor = Color.WHITE
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
+    private var shape = Shape.NONE
 
     private val paint = Paint().apply {
         color = drawColor
@@ -36,11 +40,13 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
      */
     private val touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
-    private var currentX = 0f
-    private var currentY = 0f
+    //start points
+    private var x1 = 0f
+    private var y1 = 0f
 
-    private var motionTouchEventX = 0f
-    private var motionTouchEventY = 0f
+    //end points
+    private var x2 = 0f
+    private var y2 = 0f
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
@@ -55,19 +61,6 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        motionTouchEventX = event.x
-        motionTouchEventY = event.y
-
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> touchStart()
-            MotionEvent.ACTION_MOVE -> touchMove()
-            MotionEvent.ACTION_UP -> touchUp()
-        }
-        return true
-    }
-
     fun changeStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
     }
@@ -78,10 +71,16 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     fun choosePencil() {
+        shape = Shape.NONE
         paint.color = drawColor
     }
 
+    fun chooseShape(shape: Shape) {
+        this.shape = shape
+    }
+
     fun chooseEraser() {
+        shape = Shape.NONE
         paint.color = backgroundColor
     }
 
@@ -94,39 +93,80 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
         return extraBitmap
     }
 
-    /**
-     * The following methods factor out what happens for different touch events,
-     * as determined by the onTouchEvent() when statement.
-     * This keeps the when conditional block
-     * concise and makes it easier to change what happens for each event.
-     * No need to call invalidate because we are not drawing anything.
-     */
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        x2 = event.x
+        y2 = event.y
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> touchStart()
+            MotionEvent.ACTION_MOVE -> touchMove()
+            MotionEvent.ACTION_UP -> touchUp()
+        }
+
+        return true
+    }
+
     private fun touchStart() {
         path.reset()
-        path.moveTo(motionTouchEventX, motionTouchEventY)
-        currentX = motionTouchEventX
-        currentY = motionTouchEventY
+        path.moveTo(x2, y2)
+        x1 = x2
+        y1 = y2
     }
 
     private fun touchMove() {
-        val dx = abs(motionTouchEventX - currentX)
-        val dy = abs(motionTouchEventY - currentY)
+        val dx = abs(x2 - x1)
+        val dy = abs(y2 - y1)
+
         if (dx >= touchTolerance || dy >= touchTolerance) {
-            // QuadTo() adds a quadratic bezier from the last point,
-            // approaching control point (x1,y1), and ending at (x2,y2).
-            path.quadTo(
-                currentX,
-                currentY,
-                (motionTouchEventX + currentX) / 2,
-                (motionTouchEventY + currentY) / 2
-            )
-            currentX = motionTouchEventX
-            currentY = motionTouchEventY
+            when (shape) {
+                Shape.NONE -> drawLine()
+                Shape.RECTANGLE -> drawRectangle()
+                Shape.TRIANGLE -> drawTriangle()
+                Shape.CIRCLE -> drawCircle()
+            }
+
             // Draw the path in the extra bitmap to save it.
             extraCanvas.drawPath(path, paint)
         }
 
         invalidate()
+    }
+
+    private fun drawLine() {
+        // QuadTo() adds a quadratic bezier from the last point,
+        // approaching control point (x1,y1), and ending at (x2,y2).
+        path.quadTo(x1, y1, (x2 + x1) / 2, (y2 + y1) / 2)
+
+        x1 = x2
+        y1 = y2
+    }
+
+    private fun drawRectangle() {
+        val startX = min(x1, x2)
+        val startY = min(y1, y2)
+        val endX = max(x1, x2)
+        val endY = max(y1, y2)
+
+        path.addRect(startX, startY, endX, endY, Path.Direction.CW)
+    }
+
+    private fun drawCircle() {
+        path.addCircle(x2, y2, abs(x1 - x2), Path.Direction.CCW)
+    }
+
+    private fun drawTriangle() {
+        path.moveTo(x2, y2)
+
+        if (x2 < x1 && y2 < y1) {
+            path.lineTo(x1, y2)
+        } else {
+            path.lineTo(x2, y1)
+        }
+
+        path.lineTo(x1, y1)
+        path.lineTo(x2, y2)
+        path.close()
     }
 
     private fun touchUp() {

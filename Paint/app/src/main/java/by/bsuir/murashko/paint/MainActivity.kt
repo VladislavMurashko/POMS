@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
+import by.bsuir.murashko.paint.model.Shape
 import by.bsuir.murashko.paint.util.PermissionsHelper
 import com.google.android.material.slider.Slider
 import com.himanshurawat.imageworker.Extension
@@ -23,16 +24,17 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
     private lateinit var drawView: DrawView
     private lateinit var colorPickerDialog: AmbilWarnaDialog
-    private lateinit var strokeSlider: Slider
-    private lateinit var strokeLine: View
+    private lateinit var thicknessSlider: Slider
+    private lateinit var line: View
     private lateinit var pencilButton: ImageButton
     private lateinit var shapesButton: ImageButton
     private lateinit var eraserButton: ImageButton
+    private var shape = Shape.RECTANGLE
     private var isEraserSelected = false
     private val buttonList = ArrayList<ImageButton>()
     private var sliderValue: Float = 10f.px
     private var strokeWidth: Float = sliderValue
-    private var strokeColor: Int = Color.BLACK
+    private var currentColor: Int = Color.BLACK
     private val defaultColor = Color.BLACK
     private val dateFormat = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
     private val Float.px: Float get() = (this * Resources.getSystem().displayMetrics.density)
@@ -54,9 +56,9 @@ class MainActivity : AppCompatActivity() {
         buttonList.add(shapesButton)
         buttonList.add(eraserButton)
 
-        colorPickerDialog = AmbilWarnaDialog(this, Color.BLACK, object : OnAmbilWarnaListener {
+        colorPickerDialog = AmbilWarnaDialog(this, currentColor, object : OnAmbilWarnaListener {
             override fun onOk(dialog: AmbilWarnaDialog, color: Int) {
-                strokeColor = color
+                currentColor = color
                 drawView.changeColor(color)
             }
 
@@ -65,54 +67,41 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showStrokeWidthDialog() {
+    private fun showLineThicknessDialog() {
         createDialog().show()
     }
 
     private fun createDialog(): AlertDialog.Builder {
         val dialogBuilder = AlertDialog.Builder(this)
 
-        val view = this.layoutInflater.inflate(R.layout.stroke_dialog, null)
+        val view = this.layoutInflater.inflate(R.layout.thickness_dialog, null)
 
         dialogBuilder.setView(view)
-            .setTitle("Ширина линии")
+            .setTitle("Толщина линии")
             .setCancelable(false)
             .setPositiveButton("Подтвердить") { _, _ ->
-                drawView.changeStrokeWidth(strokeSlider.value)
-                sliderValue = strokeSlider.value
-                strokeWidth = strokeLine.height.toFloat()
+                drawView.changeStrokeWidth(thicknessSlider.value)
+                sliderValue = thicknessSlider.value
+                strokeWidth = line.height.toFloat()
             }
 
-        strokeLine = view.findViewById(R.id.stroke_line)
-        strokeLine.setBackgroundColor(strokeColor)
-        changeStrokeWidth(strokeWidth)
+        line = view.findViewById(R.id.line)
+        line.setBackgroundColor(defaultColor)
+        changeLineThickness(strokeWidth)
 
-        strokeSlider = view.findViewById(R.id.stroke_slider)
-        strokeSlider.value = sliderValue
-        strokeSlider.addOnChangeListener { _, height, _ ->
-            changeStrokeWidth(height)
+        thicknessSlider = view.findViewById(R.id.thickness_slider)
+        thicknessSlider.value = sliderValue
+        thicknessSlider.addOnChangeListener { _, height, _ ->
+            changeLineThickness(height)
         }
 
         return dialogBuilder
     }
 
-    private fun changeStrokeWidth(height: Float) {
-        val params = strokeLine.layoutParams
+    private fun changeLineThickness(height: Float) {
+        val params = line.layoutParams
         params.height = height.toInt()
-        strokeLine.layoutParams = params
-    }
-
-    fun chooseColor(view: View) {
-        if (isEraserSelected) return
-        colorPickerDialog.show()
-    }
-
-    fun chooseShape(view: View) {
-        resetButtons()
-        shapesButton.setActive
-        isEraserSelected = false
-        //drawView.chooseShape
-        showStrokeWidthDialog()
+        line.layoutParams = params
     }
 
     fun choosePencil(view: View) {
@@ -120,7 +109,45 @@ class MainActivity : AppCompatActivity() {
         pencilButton.setActive
         isEraserSelected = false
         drawView.choosePencil()
-        showStrokeWidthDialog()
+    }
+
+    fun chooseShape(view: View) {
+        resetButtons()
+        shapesButton.setActive
+        isEraserSelected = false
+        setShape()
+    }
+
+    private fun setShape() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Выберите фигуру").setCancelable(false)
+
+        val shapes = arrayOf("Прямоугольник", "Треугольник", "Круг")
+        val checkedItem = 0
+        shape = Shape.RECTANGLE
+
+        builder.setSingleChoiceItems(shapes, checkedItem) { _, itemIndex ->
+            when (itemIndex) {
+                1 -> shape = Shape.TRIANGLE
+                2 -> shape = Shape.CIRCLE
+            }
+        }
+
+        builder.setPositiveButton(R.string.submit_dialog_button_text) { _, _ ->
+            drawView.chooseShape(shape)
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    fun chooseColor(view: View) {
+        if (isEraserSelected) return
+        colorPickerDialog.show()
+    }
+
+    fun chooseLineThickness(view: View) {
+        showLineThicknessDialog()
     }
 
     fun chooseEraser(view: View) {
@@ -128,7 +155,6 @@ class MainActivity : AppCompatActivity() {
         eraserButton.setActive
         isEraserSelected = true
         drawView.chooseEraser()
-        showStrokeWidthDialog()
     }
 
     fun clearCanvas(view: View) {
@@ -167,4 +193,20 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+    /*fun setImageBackground(view: View) {
+        if (PermissionsHelper.askForPermissions(this, this)) {
+            FileHelper.pickFile(this)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            val imagePath = FileHelper.getImagePath(this, data)
+
+            drawView.setImageBackground(imagePath!!)
+        }
+    }*/
 }

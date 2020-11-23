@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <View
-            android:id="@+id/stroke_line"
+            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_gravity="center"
@@ -21,7 +21,7 @@
     </LinearLayout>
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/stroke_slider"
+        android:id="@+id/thickness_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:value="10"
