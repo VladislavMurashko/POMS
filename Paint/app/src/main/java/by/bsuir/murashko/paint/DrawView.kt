@@ -59,6 +59,7 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
+        canvas.drawPath(path, paint)
     }
 
     fun changeStrokeWidth(strokeWidth: Float) {
@@ -85,7 +86,7 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     fun clearCanvas() {
-        extraCanvas.drawColor(backgroundColor, PorterDuff.Mode.CLEAR)
+        extraCanvas.drawColor(backgroundColor)
         invalidate()
     }
 
@@ -110,6 +111,7 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
     private fun touchStart() {
         path.reset()
         path.moveTo(x2, y2)
+
         x1 = x2
         y1 = y2
     }
@@ -119,15 +121,16 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
         val dy = abs(y2 - y1)
 
         if (dx >= touchTolerance || dy >= touchTolerance) {
+            if (shape != Shape.NONE) {
+                path.reset()
+            }
+
             when (shape) {
                 Shape.NONE -> drawLine()
                 Shape.RECTANGLE -> drawRectangle()
                 Shape.TRIANGLE -> drawTriangle()
                 Shape.CIRCLE -> drawCircle()
             }
-
-            // Draw the path in the extra bitmap to save it.
-            extraCanvas.drawPath(path, paint)
         }
 
         invalidate()
@@ -170,6 +173,8 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private fun touchUp() {
+        // Draw the path in the extra bitmap to save it.
+        extraCanvas.drawPath(path, paint)
         path.reset()
     }
 }
