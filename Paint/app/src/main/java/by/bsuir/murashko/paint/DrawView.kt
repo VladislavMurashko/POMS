@@ -78,6 +78,7 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     fun chooseShape(shape: Shape) {
         this.shape = shape
+        paint.color = drawColor
     }
 
     fun chooseEraser() {
@@ -159,16 +160,12 @@ class DrawView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private fun drawTriangle() {
-        path.moveTo(x2, y2)
+        path.moveTo(x1, y1)
 
-        if (x2 < x1 && y2 < y1) {
-            path.lineTo(x1, y2)
-        } else {
-            path.lineTo(x2, y1)
-        }
-
+        path.lineTo((x1 + x2) / 2, y2)
+        path.lineTo(x2, y1)
         path.lineTo(x1, y1)
-        path.lineTo(x2, y2)
+
         path.close()
     }
 
